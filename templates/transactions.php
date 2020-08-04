@@ -66,7 +66,7 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
 
         foreach ($transaction_list as $item){
             $name = string_decode($item['firstName'], 1).' '.string_decode($item['lastName'], 1);
-            $time = jdate( 'y/n/d' , $item['time']);
+            $time = date_i18n(get_option('date_format'), $item['time']);
             $amount = number_format($item['amount']);
             $content = '<tr>';
             $content .= "<td>$item[code]</td>";
