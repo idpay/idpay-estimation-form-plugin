@@ -3,8 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
-?>
-<?php
+
 $websiteurl = get_site_url();
 $time       = date_i18n('y/n/d G:m', $payment->time);
 $amount     = number_format($payment->amount);

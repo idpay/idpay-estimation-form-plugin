@@ -2,8 +2,7 @@
 if ( ! defined( "ABSPATH" ) ) {
 	exit;
 }
-?>
-<?php
+
 $idpay      = $options['idpay'] ? 'checked' : '';
 $is_encript = $options['is_encript'] ? 'checked' : '';
 $sandbox    = $options['sandbox'] ? 'checked' : '';

@@ -2,8 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-?>
-<?php
+
 $websiteurl      = get_site_url();
 $url             = $websiteurl. '/wp-admin/admin.php?page=ep_transactions';
 $ef_table_name   = $wpdb->prefix . "wpefc_logs";

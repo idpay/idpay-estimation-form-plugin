@@ -1,6 +1,6 @@
-=== IDPay for WP Estimation Form ===
+=== IDPay for Estimation Form ===
 Contributors: meysamrazmi, vispa
-Tags: IDPay, WP Estimation Form, form, payment, gateway, آیدی پی
+Tags: IDPay, WP Estimation Form, Estimation Form, form, payment, gateway, آیدی پی
 Stable tag: 1.0.0
 Tested up to: 5.4.2
 License: GPLv2 or later
@@ -26,5 +26,5 @@ Thank you so much for using IDPay Payment Gateway.
 
 == Changelog ==
 
-= 1.0.0, August 4, 2020 =
+= 1.0.0, August 6, 2020 =
 * First release.

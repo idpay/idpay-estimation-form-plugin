@@ -2,12 +2,12 @@
 /*
  * IDPay Advanced Class
  *
- * version 	: 1.0
- * link 	: https://vrl.ir/zpc
+ * version 	: 1.0.0
+ * link 	: https://idpay.ir/plugins
  *
- * author 	: milad maldar
- * e-mail 	: miladworkshop@gmail.com
- * website 	: https://miladworkshop.ir
+ * author 	: IDPay
+ * e-mail 	: support@idpay.ir
+ * website 	: https://idpay.ir
 */
 
 class idpay
