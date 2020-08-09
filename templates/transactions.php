@@ -3,10 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+GLOBAL $wpdb;
 $websiteurl      = get_site_url();
-$url             = $websiteurl. '/wp-admin/admin.php?page=ep_transactions';
+$url             = $websiteurl. '/wp-admin/admin.php?page=idpay_wpefc_transactions';
 $ef_table_name   = $wpdb->prefix . "wpefc_logs";
-$idpay_transactions = $wpdb->prefix . "wpefc_idpay_transactions";
 $epstatus        = isset($_GET['unsuccess'])? false : true;
 
 ?>
@@ -35,7 +35,7 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
         $max = $paged * $limit;
 
         $sql = "select transactions.* , lg.ref, lg.email, lg.content, lg.formTitle, lg.firstName, lg.lastName 
-            FROM $idpay_transactions transactions
+            FROM $this->idpay_transactions transactions
             LEFT JOIN $ef_table_name lg ON (transactions.code = lg.id) 
             WHERE transactions.status ". ($epstatus ? '=' : '!=') ." '100' 
             ORDER BY id DESC 
@@ -43,28 +43,28 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
 
         $transaction_list = $wpdb->get_results($sql,ARRAY_A);
 
-        $count = "select count(*) FROM $idpay_transactions WHERE status ". ($epstatus ? '=' : '!=') ." '100'";
+        $count = "select count(*) FROM $this->idpay_transactions WHERE status ". ($epstatus ? '=' : '!=') ." '100'";
         $count = $wpdb->get_var($count);
 
         if(!$epstatus){
-            echo '<style>
-                    #wpwrap {
-                        background: -webkit-linear-gradient(left, #6941a8, #cc5787) !important;
-                        background: linear-gradient(to right, #6941a8, #cc5787) !important;
-                    }
-                    </style>';
-        }
-        else{
             echo '<style>	
-                    #wpwrap{
-                        background: -webkit-linear-gradient(left, #25c481, #25b7c4) !important;
-                        background: linear-gradient(to right, #25c481, #25b7c4) !important;
-                    }
-                    </style>';
+                ul li:last-child a.wpefc_transaction_btn {
+                    background: linear-gradient(to right, #6941a8, #cc5787) !important;
+                    color: #fff;
+                }
+            </style>';
+        }
+        else {
+            echo '<style>	
+                ul li:first-child a.wpefc_transaction_btn {
+                    background: linear-gradient(to right, #25c481, #25b7c4) !important;
+                    color: #fff;
+                }
+            </style>';
         }
 
         foreach ($transaction_list as $item){
-            $name = string_decode($item['firstName'], 1).' '.string_decode($item['lastName'], 1);
+            $name = $this->string_decode($item['firstName'], 1).' '. $this->string_decode($item['lastName'], 1);
             $time = date_i18n(get_option('date_format'), $item['time']);
             $amount = number_format($item['amount']);
             $content = '<tr>';

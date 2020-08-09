@@ -9,12 +9,7 @@ $time       = date_i18n('y/n/d G:m', $payment->time);
 $amount     = number_format($payment->amount);
 
 if(strpos($transaction->content, '<form ') || strpos($transaction->content, '<strong>')){
-    $persianversion =  str_replace('<strong>[order_type]</strong>','',$transaction->content);
-    /*
-        $encodedemail = _find_between($persianversion, '<span class="lfb_value">', '</span>');
-        $decodedemail = string_decode($encodedemail,1);
-        echo str_replace($encodedemail,$decodedemail,$persianversion);
-    */
+    $persianversion =  str_replace('<strong>[order_type]</strong>','', $transaction->content);
 
     $lastPos = 0;
     $positions = array();
@@ -27,7 +22,7 @@ if(strpos($transaction->content, '<form ') || strpos($transaction->content, '<st
         $lastSpan = strpos($persianversion, '</span>', $fileStartPos);
         $value = substr($persianversion, $fileStartPos, $lastSpan - $fileStartPos);
         $toReplaceDefault[] = '<span class="lfb_value">' . $value . '</span>';
-        $toReplaceBy[] = '<span class="lfb_value">' . string_decode($value, 1) . '</span>';
+        $toReplaceBy[] = '<span class="lfb_value">' . $this->string_decode($value, 1) . '</span>';
     }
     foreach ($toReplaceBy as $key => $value) {
         $persianversion = str_replace($toReplaceDefault[$key], $toReplaceBy[$key], $persianversion);
@@ -35,7 +30,7 @@ if(strpos($transaction->content, '<form ') || strpos($transaction->content, '<st
     echo $persianversion;
 
 }else{
-    echo str_replace('<strong>[order_type]</strong>','',string_decode($transaction->content,1));
+    echo str_replace('<strong>[order_type]</strong>','', $this->string_decode($transaction->content,1));
 }
 if($transaction->paid):?>
     <div>
@@ -57,7 +52,7 @@ if($transaction->paid):?>
         </table>
         <p style='opacity: 0'>.</p>
     </div>
-    <a style='padding: 10px; margin: 10px auto; display: block; width: 200px; text-align: center; text-decoration: none; color: #fff; font-size: 15px; border-radius: 5px; background: linear-gradient(to right, #00edcd, #00c1ca); box-shadow: 2px 2px 5px #00c1ca82;' href='<?php echo $websiteurl;?>/wp-admin/admin.php?page=ep_transactions'>بازگشت</a>
+    <a style='padding: 10px; margin: 10px auto; display: block; width: 200px; text-align: center; text-decoration: none; color: #fff; font-size: 15px; border-radius: 5px; background: linear-gradient(to right, #00edcd, #00c1ca); box-shadow: 2px 2px 5px #00c1ca82;' href='<?php echo $websiteurl;?>/wp-admin/admin.php?page=idpay_wpefc_transactions'>بازگشت</a>
 <?php else: ?>
     <div>
         <table style='margin: 0 auto; line-height: 30px; text-align: center;'>
@@ -78,7 +73,7 @@ if($transaction->paid):?>
         </table>
         <p style='opacity: 0'>.</p>
     </div>
-    <a style='padding: 10px; margin: 10px auto; display: block; width: 200px; text-align: center; text-decoration: none; color: #fff; font-size: 15px; border-radius: 5px; background: linear-gradient(to right, #00edcd, #00c1ca); box-shadow: 2px 2px 5px #00c1ca82;' href='<?php echo $websiteurl;?>/wp-admin/admin.php?page=ep_transactions'>بازگشت</a>
+    <a style='padding: 10px; margin: 10px auto; display: block; width: 200px; text-align: center; text-decoration: none; color: #fff; font-size: 15px; border-radius: 5px; background: linear-gradient(to right, #00edcd, #00c1ca); box-shadow: 2px 2px 5px #00c1ca82;' href='<?php echo $websiteurl;?>/wp-admin/admin.php?page=idpay_wpefc_transactions'>بازگشت</a>
 <?php endif;?>
 <?php echo file_get_contents( IDPAY_WPEFC_PLUGIN_PATH . 'templates/transactions_style.html'); ?>
 
@@ -87,20 +82,7 @@ if($transaction->paid):?>
         box-shadow: 0 0 20px #00000078;
     }
     #wpcontent{
-        background: #fff;
-        background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/382994/image.jpg);
-        background-size: cover;
         min-height: 100vh;
-    }
-    #wpbody{
-        padding: 4% 6%;
-    }
-    #wpbody-content>div{
-        width: 90%;
-        background: #ffffffd4;
-        margin: 20px auto;
-        float: none;
-        border-radius: 5px;
     }
     #wpbody-content .clear{
         display: none;

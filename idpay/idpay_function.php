@@ -10,7 +10,7 @@
  * website 	: https://idpay.ir
 */
 
-class idpay
+class idpay_WPEFC_functions
 {
     public function getStatus($status_code)
     {

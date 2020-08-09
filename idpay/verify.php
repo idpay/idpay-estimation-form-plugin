@@ -13,21 +13,21 @@ $date     = isset($_POST['date'])? sanitize_text_field( $_POST['date'] ) : '';
 $id     = isset($_GET['id']) ? sanitize_text_field($_GET['id']) : '';
 $logid  = isset($_GET['order_id']) ? sanitize_text_field($_GET['order_id']) : '';
 
-$sql    = "SELECT * FROM $idpay_transactions WHERE `token` = '$Token' AND `id` = '$id'";
+$sql    = "SELECT * FROM $this->idpay_transactions WHERE `token` = '$Token' AND `id` = '$id'";
 $transaction = $wpdb->get_row($sql);
 
 if(empty($order_id) || empty($Token) || empty($id) || empty($logid) || empty($transaction->token) || $transaction->token != $Token || $order_id != $logid){
-    result_msg(0,'پارامتر های ورودی اشتباه هستند.');
+    $this->render_msg(0,'پارامتر های ورودی اشتباه هستند.');
 }
 else{
     $ef_table_name = $wpdb->prefix . "wpefc_logs";
-    $idpay 	= new idpay();
+    $idpay 	= new idpay_WPEFC_functions();
 
     if ($status == 10) {
-        $result = $idpay->verify($options['api_key'], $Token, $logid, $options['sandbox']);
+        $result = $idpay->verify($this->get_option('api_key'), $Token, $logid, $this->get_option('sandbox'));
 
         if (isset($result["Status"]) && $result["Status"] == 1) {
-            $wpdb->query("UPDATE $idpay_transactions 
+            $wpdb->query("UPDATE $this->idpay_transactions 
             SET status = '100',
                 token = '$result[Track_id]',
                 log = '$result[log]' 
@@ -35,21 +35,21 @@ else{
 
             $wpdb->query("UPDATE ". $wpdb->prefix ."wpefc_logs SET paid = '1' WHERE id = '$logid'");
 
-            result_msg(1, $result["Message"]);
+            $this->render_msg(1, $result["Message"]);
         } else {
-            $wpdb->query("UPDATE $idpay_transactions 
-            SET log = '". print_r($_POST, true) ."' 
+            $wpdb->query("UPDATE $this->idpay_transactions 
+            SET log = '". print_r(sanitize_text_field($_POST), true) ."' 
             WHERE token = '$Token' AND id = '$id'");
 
-            result_msg(0, $result["Message"]);
+            $this->render_msg(0, $result["Message"]);
         }
 
     } else {
-        $wpdb->query("UPDATE $idpay_transactions 
-            SET log = '". print_r($_POST, true) ."' 
+        $wpdb->query("UPDATE $this->idpay_transactions 
+            SET log = '". print_r(sanitize_text_field($_POST), true) ."' 
             WHERE token = '$Token' AND id = '$id'");
 
-        $wpdb->query("UPDATE $idpay_transactions SET `status` = '$status' WHERE `token` = '$Token'");
-        result_msg(0, sprintf('%s (کد: %s). کد رهگیری: %s', $idpay->getStatus($status), $status, $track_id ) );
+        $wpdb->query("UPDATE $this->idpay_transactions SET `status` = '$status' WHERE `token` = '$Token'");
+        $this->render_msg(0, sprintf('%s (کد: %s). کد رهگیری: %s', $idpay->getStatus($status), $status, $track_id ) );
     }
 }
