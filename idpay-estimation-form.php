@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: IDPay for Estimation Form
-Description: این افزونه درگاه پرداخت آیدی پی را به افزونه WP Estimation Form اضافه می کند.
-Plugin URI: https://idpay.ir/
+Plugin Name: IDPay Estimation Form
+Description: IDPay payment gateway for WP Estimation Form.
+Plugin URI: https://github.com/idpay/estimation-form
 Version: 1.0.0
 Author: meysamrazmi, vispa
 Author URI: https://idpay.ir/
