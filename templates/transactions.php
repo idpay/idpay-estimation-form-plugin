@@ -6,11 +6,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 GLOBAL $wpdb;
 $websiteurl      = get_site_url();
 $url             = $websiteurl. '/wp-admin/admin.php?page=idpay_wpefc_transactions';
-$ef_table_name   = $wpdb->prefix . "wpefc_logs";
 $epstatus        = isset($_GET['unsuccess'])? false : true;
 
 ?>
-<div class="wrap">
+<div class="wrap <?php echo $epstatus? 'success-transactions': 'failed-transactions';?>">
     <h1>Transactions</h1>
     <p style="margin-bottom: 50px; margin-top: 0px; font-size: 14px; letter-spacing: 1px;"><?php echo $epstatus? 'تراکنش های موفق': 'تراکنش های ناموفق'; ?></p>
     <ul style="display: flex">
@@ -36,7 +35,7 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
 
         $sql = "select transactions.* , lg.ref, lg.email, lg.content, lg.formTitle, lg.firstName, lg.lastName 
             FROM $this->idpay_transactions transactions
-            LEFT JOIN $ef_table_name lg ON (transactions.code = lg.id) 
+            LEFT JOIN $this->wpefc_logs lg ON (transactions.code = lg.id) 
             WHERE transactions.status ". ($epstatus ? '=' : '!=') ." '100' 
             ORDER BY id DESC 
             LIMIT $min, $max ";
@@ -46,34 +45,17 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
         $count = "select count(*) FROM $this->idpay_transactions WHERE status ". ($epstatus ? '=' : '!=') ." '100'";
         $count = $wpdb->get_var($count);
 
-        if(!$epstatus){
-            echo '<style>	
-                ul li:last-child a.wpefc_transaction_btn {
-                    background: linear-gradient(to right, #6941a8, #cc5787) !important;
-                    color: #fff;
-                }
-            </style>';
-        }
-        else {
-            echo '<style>	
-                ul li:first-child a.wpefc_transaction_btn {
-                    background: linear-gradient(to right, #25c481, #25b7c4) !important;
-                    color: #fff;
-                }
-            </style>';
-        }
-
         foreach ($transaction_list as $item){
             $name = $this->string_decode($item['firstName'], 1).' '. $this->string_decode($item['lastName'], 1);
-            $time = date_i18n(get_option('date_format'), $item['time']);
+            $time = date_i18n( 'Y/n/d G:m', $item['time']);
             $amount = number_format($item['amount']);
             $content = '<tr>';
             $content .= "<td>$item[code]</td>";
             $content .= "<td>$name</td>";
             $content .= "<td>$item[formTitle]</td>";
-            $content .= "<td>$time</td>";
+            $content .= "<td style=\"direction: ltr;\">$time</td>";
             $content .= "<td>$amount</td>";
-            $content .= "<td style='text-align: center;width: 110px;'><a style='margin: 0; background: transparent; font-weight: bold; padding: 5px 5px;' class='wpefc_transaction_btn' href='". $url ."_single&code=$item[code]&sql_id=$item[id]'>نمایش جزئیات</a></td>";
+            $content .= "<td><a class='button' href='". $url ."_single&code=$item[code]&sql_id=$item[id]'>نمایش جزئیات</a></td>";
             $content .= '</tr>';
             echo $content;
         }
@@ -82,10 +64,10 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
         $beppaged = $paged - 1;
         $unsucces = $epstatus ? '':'&unsuccess';
         if($paged > 1){
-            $paginationbtn .= "<li><a class='wpefc_transaction_btn' href='$url&pagenumber=$beppaged$unsucces'>صفحه قبل</a></li>";
+            $paginationbtn .= "<li><a class='button' href='$url&pagenumber=$beppaged$unsucces'>صفحه قبل</a></li>";
         }
         if ((($count/$limit)/$paged) > 1){
-            $paginationbtn .= "<li><a class='wpefc_transaction_btn' href='$url&pagenumber=$feppaged$unsucces'>صفحه بعد</a></li>";
+            $paginationbtn .= "<li><a class='button' href='$url&pagenumber=$feppaged$unsucces'>صفحه بعد</a></li>";
         }
 
         $paginationbtn .= '</ul>';

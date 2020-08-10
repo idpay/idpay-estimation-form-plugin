@@ -1,50 +1,26 @@
 <style>
-    #wpefc_transaction, #wpbody-content table{
-        width: 100%;
+    table#wpefc_transaction {
         border-collapse: collapse;
-        border: 1px solid #aaa;
-        border-radius: 8px;
-        width: 100% !important;
-        background: transparent;
+        width: 100%;
+        border: 1px solid #ddd;
     }
-    #wpbody-content table th{
-        background: #ffffff55;
-    }
-    #wpbody-content hr{
-        border: none;
-        border-bottom: 1px solid #ffffff44;
-    }
-    #wpbody-content table thead th{
-        background: #ffffff55;
-    }
-    #wpbody-content table tbody th{
-        background: transparent;
-    }
-
     #wpefc_transaction td{
         padding: 10px 5px;
+        text-align: center;
     }
     #wpefc_transaction tbody tr{
-        border-bottom: 1px solid #aaa;
+        border-bottom: 1px solid #ddd;
         transition: 0.3s;
-    }
-    #wpbody-content table tbody td span{
-        font-size: 13px !important;
-    }
-    #wpbody-content table tbody th strong{
-        font-size: 14px !important;
-    }
-    #sfb_summaryTotalTr{
-        background: #ffffff33;
-    }
-    #wpefc_transaction tbody tr:hover{
-        background: #ffffff21;
     }
     #wpefc_transaction thead{
         line-height: 30px;
         font-weight: bold;
-        border-bottom: 2px solid #888;
-        background: #ddd;
+        border-bottom: 1px solid #888;
+        background: linear-gradient(to right, #00edcd, #00c1ca);
+        color: #fff;
+    }
+    .failed-transactions #wpefc_transaction thead {
+        background: linear-gradient(to right, #d5280c, #b7004c);
     }
     .wpefc_transaction_btn{
         padding: 7px 15px;
@@ -59,10 +35,50 @@
         background: #ffffff00;
         border: 1px solid #aaa;
     }
-    #wpbody-content>div{
-        padding: 5% 3%;
-        padding-bottom: 0;
+    #wpbody-content > div:not(.clear){
+        background: #FFF;
+        padding: 24px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        margin: 0 auto 38px;
+        width: 90%;
+        margin-top: 40px;
     }
-
+    .failed-transactions ul li:last-child a.wpefc_transaction_btn {
+        background: linear-gradient(to right, #d5280c, #b7004c) !important;
+        color: #fff;
+    }
+    .success-transactions ul li:first-child a.wpefc_transaction_btn {
+        background: linear-gradient(to right, #25c481, #25b7c4) !important;
+        color: #fff;
+    }
+    .idpay-log {
+        margin: 0px auto;
+        line-height: 15px;
+        text-align: center;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    table.idpay-log td {
+        border: 1px solid #ddd;
+        color: #444 !important;
+        padding: 5px;
+    }
+    table.idpay-log th {
+        color: #fff;
+    }
+    table.idpay-log thead tr {
+        line-height: 40px;
+        background: linear-gradient(to right, #00edcd, #00c1ca);
+    }
+    table.idpay-log.failed-log thead tr {
+        background: linear-gradient(to right, #d5280c, #b7004c);
+    }
+    .back-button {
+        margin: auto !important;
+        display: block !important;
+        width: 150px;
+        text-align: center;
+        line-height: 40px !important;
+    }
     .update-nag,.notice,.media-upload-form .notice, .media-upload-form div.error, .wrap .notice, .wrap div.error, .wrap div.updated{display: none !important;}
 </style>

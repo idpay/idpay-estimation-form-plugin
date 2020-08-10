@@ -24,6 +24,7 @@ final class IDPAY_WPEFC {
     private $instance;
     public $idpay_table_name;
     public $idpay_transactions;
+    public $wpefc_logs;
     public $options;
 
     public function init() {
@@ -56,6 +57,7 @@ final class IDPAY_WPEFC {
 
         $this->idpay_table_name   = $wpdb->prefix . "wpefc_idpay_setting";
         $this->idpay_transactions = $wpdb->prefix . "wpefc_idpay_transactions";
+        $this->wpefc_logs = $wpdb->prefix . "wpefc_logs";;
     }
 
     private function check_db(){
@@ -260,10 +262,9 @@ final class IDPAY_WPEFC {
 
     private function find_order($limit = 10, $times = 0){
         GLOBAL $wpdb;
-        $ef_table_name = $wpdb->prefix . "wpefc_logs";
 
         $order = [];
-        $log = $wpdb->get_results ("SELECT `id`,`ref`,`email`,`phone`,`firstName`,`lastName`,`totalPrice` FROM `$ef_table_name` ORDER by `id` DESC LIMIT $limit");
+        $log = $wpdb->get_results ("SELECT `id`,`ref`,`email`,`phone`,`firstName`,`lastName`,`totalPrice` FROM `". $this->wpefc_logs ."` ORDER by `id` DESC LIMIT $limit");
         foreach ($log as $val){
             if($this->string_decode($val->email,1) == sanitize_text_field($_GET['email'])){
                 $order['amount'] = $val->totalPrice;

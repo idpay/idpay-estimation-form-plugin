@@ -20,7 +20,6 @@ if(empty($order_id) || empty($Token) || empty($id) || empty($logid) || empty($tr
     $this->render_msg(0,'پارامتر های ورودی اشتباه هستند.');
 }
 else{
-    $ef_table_name = $wpdb->prefix . "wpefc_logs";
     $idpay 	= new idpay_WPEFC_functions();
 
     if ($status == 10) {
@@ -33,7 +32,7 @@ else{
                 log = '$result[log]' 
             WHERE token = '$Token' AND id = '$id'");
 
-            $wpdb->query("UPDATE ". $wpdb->prefix ."wpefc_logs SET paid = '1' WHERE id = '$logid'");
+            $wpdb->query("UPDATE ". $this->wpefc_logs ." SET paid = '1' WHERE id = '$logid'");
 
             $this->render_msg(1, $result["Message"]);
         } else {
