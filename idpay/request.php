@@ -16,7 +16,7 @@ if($wpdb->query($sql) == TRUE){
     $this->render_msg(0, 'در ارتباط با دیتابیس خطایی رخ داده است.');
 }
 
-$CallbackURL = get_home_url()."?wpef_idpay=verify&payment=idpay&id=$dblastid&order_id=$order[id]";
+$CallbackURL = get_home_url()."?wpef_idpay=verify&payment=idpay&sub_id=$dblastid&order_id=$order[id]";
 $amount      = $amount * ( ($this->get_option('currency') == 'toman') ? 10 : 1 );
 
 $result = $idpay->request($this->get_option('api_key'), $order['id'], $amount, $Description, $order['email'], $order['phone'], $order['name'], $CallbackURL, $this->get_option('sandbox'));
