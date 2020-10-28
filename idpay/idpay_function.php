@@ -2,7 +2,7 @@
 /*
  * IDPay Advanced Class
  *
- * version 	: 1.0.1
+ * version 	: 1.0.0
  * link 	: https://idpay.ir/plugins
  *
  * author 	: IDPay

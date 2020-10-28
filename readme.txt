@@ -1,7 +1,7 @@
 === IDPay for Estimation Form ===
 Contributors: meysamrazmi, vispa
 Tags: IDPay, WP Estimation Form, Estimation Form, form, payment, gateway, آیدی پی
-Stable tag: 1.0.1
+Stable tag: 1.0.0
 Tested up to: 5.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -25,9 +25,6 @@ After creating a web service on https://idpay.ir and getting an API Key, follow 
 Thank you so much for using IDPay Payment Gateway.
 
 == Changelog ==
-
-= 1.0.1, October 11, 2020 =
-* check GET parameters if POST was empty in relation with IDPay webservices new update.
 
 = 1.0.0, August 6, 2020 =
 * First release.
