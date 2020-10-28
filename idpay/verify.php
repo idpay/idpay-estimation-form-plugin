@@ -2,14 +2,14 @@
 require_once dirname(__FILE__) . '/idpay_function.php';
 GLOBAL $wpdb;
 
-$status    = !empty($_POST['status'])  ? sanitize_text_field($_POST['status'])   : (!empty($_GET['status'])  ? sanitize_text_field($_GET['status'])   : NULL);
-$track_id  = !empty($_POST['track_id'])? sanitize_text_field($_POST['track_id']) : (!empty($_GET['track_id'])? sanitize_text_field($_GET['track_id']) : NULL);
-$Token     = !empty($_POST['id'])      ? sanitize_text_field($_POST['id'])       : (!empty($_GET['id'])      ? sanitize_text_field($_GET['id'])       : NULL);
-$order_id  = !empty($_POST['order_id'])? sanitize_text_field($_POST['order_id']) : (!empty($_GET['order_id'])? sanitize_text_field($_GET['order_id']) : NULL);
-$params    = !empty($_POST['id']) ? $_POST : $_GET;
+$params   = ($_SERVER['REQUEST_METHOD'] === 'POST') ? $_POST : $_GET;
+$status   = sanitize_text_field($params['status']);
+$track_id = sanitize_text_field($params['track_id']);
+$Token    = sanitize_text_field($params['id']);
+$order_id = sanitize_text_field($params['order_id']);
 
-$sub_id = isset($_GET['sub_id']) ? sanitize_text_field($_GET['sub_id']) : '';
-$logid  = isset($_GET['order_id']) ? sanitize_text_field($_GET['order_id']) : '';
+$sub_id = sanitize_text_field($_GET['sub_id']);
+$logid  = sanitize_text_field($_GET['order_id']);
 
 $sql    = "SELECT * FROM $this->idpay_transactions WHERE `token` = '$Token' AND `id` = '$sub_id'";
 $transaction = $wpdb->get_row($sql);
