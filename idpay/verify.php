@@ -1,4 +1,6 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 require_once dirname(__FILE__) . '/idpay_function.php';
 GLOBAL $wpdb;
 
@@ -35,18 +37,19 @@ else{
             $this->render_msg(1, $result["Message"]);
         } else {
             $wpdb->query("UPDATE $this->idpay_transactions 
-            SET log = '". print_r(sanitize_text_field($params), true) ."' 
+            SET log = '". $result["Message"] ."' 
             WHERE token = '$Token' AND id = '$sub_id'");
 
             $this->render_msg(0, $result["Message"]);
         }
 
     } else {
+        $message = sprintf('%s (کد: %s). کد رهگیری: %s', $idpay->getStatus($status), $status, $track_id );
         $wpdb->query("UPDATE $this->idpay_transactions 
-            SET log = '". print_r(sanitize_text_field($params), true) ."' 
+            SET log = '. $message .' 
             WHERE token = '$Token' AND id = '$sub_id'");
 
         $wpdb->query("UPDATE $this->idpay_transactions SET `status` = '$status' WHERE `token` = '$Token'");
-        $this->render_msg(0, sprintf('%s (کد: %s). کد رهگیری: %s', $idpay->getStatus($status), $status, $track_id ) );
+        $this->render_msg(0, $message );
     }
 }

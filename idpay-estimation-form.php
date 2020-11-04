@@ -9,6 +9,8 @@ Author URI: https://idpay.ir/
 License: GPLv2 or later
 */
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 if ( ! class_exists( 'IDPAY_WPEFC' ) ):
 
 GLOBAL $wpdb;

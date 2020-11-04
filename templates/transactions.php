@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 GLOBAL $wpdb;
 $websiteurl      = get_site_url();
-$url             = $websiteurl. '/wp-admin/admin.php?page=idpay_wpefc_transactions';
+$url             = $websiteurl . '/wp-admin/admin.php?page=idpay_wpefc_transactions';
 $epstatus        = isset($_GET['unsuccess'])? false : true;
 
 ?>

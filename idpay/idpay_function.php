@@ -9,6 +9,7 @@
  * e-mail 	: support@idpay.ir
  * website 	: https://idpay.ir
 */
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 class idpay_WPEFC_functions
 {
