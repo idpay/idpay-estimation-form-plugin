@@ -22,7 +22,9 @@ $amount      = $amount * ( ($this->get_option('currency') == 'toman') ? 10 : 1 )
 $result = $idpay->request($this->get_option('api_key'), $order['id'], $amount, $Description, $order['email'], $order['phone'], $order['name'], $CallbackURL, $this->get_option('sandbox'));
 
 if (isset($result["Status"]) && $result["Status"] == 1) {
+
     $sql = "UPDATE $this->idpay_transactions SET token = '$result[Token]', log = 'انتقال به بانک' WHERE `id` = '$dblastid'";
+
     if($wpdb->query($sql)){
         $idpay->redirect($result["StartPay"]);
     }

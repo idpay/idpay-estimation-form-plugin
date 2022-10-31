@@ -198,4 +198,14 @@ class idpay_WPEFC_functions
             );
         }
     }
+
+    public function isNotDoubleSpending($database,$reference, $order_id, $transaction_id)
+    {
+        $sql = sprintf("SELECT * FROM %s WHERE `code` = %s", $reference, $order_id);
+        $transaction = $database->get_row($sql);
+        if (!empty($transaction->token)) {
+            return $transaction->token == $transaction_id;
+        }
+        return false;
+    }
 }
