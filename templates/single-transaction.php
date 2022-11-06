@@ -22,7 +22,7 @@ if (strpos($transaction->content, '<form ') || strpos($transaction->content, '<s
         $lastSpan = strpos($persianversion, '</span>', $fileStartPos);
         $value = substr($persianversion, $fileStartPos, $lastSpan - $fileStartPos);
         $toReplaceDefault[] = '<span class="lfb_value">' . $value . '</span>';
-        $toReplaceBy[] = '<span class="lfb_value">' . $this->string_decode($value, 1) . '</span>';
+        $toReplaceBy[] = '<span class="lfb_value">' . $value . '</span>';
     }
     foreach ($toReplaceBy as $key => $value) {
         $persianversion = str_replace($toReplaceDefault[$key], $toReplaceBy[$key], $persianversion);
@@ -30,7 +30,9 @@ if (strpos($transaction->content, '<form ') || strpos($transaction->content, '<s
     echo '<div class="lfb_logContainer">'. $persianversion .'</div>';
 
 } else {
-    echo '<div class="lfb_logContainer">'. str_replace('<strong>[order_type]</strong>', '', $this->string_decode($transaction->content, 1)) .'</div>';
+    echo '<div class="lfb_logContainer">'.
+        str_replace('<strong>[order_type]</strong>','', wp_specialchars_decode($transaction->content)) .
+        '</div>';
 }
 ?>
 <div>

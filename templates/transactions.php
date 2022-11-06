@@ -33,7 +33,7 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
         $min = $paged == 1 ? 0 : ($paged - 1) * $limit;
         $max = $paged * $limit;
 
-        $sql = "select transactions.* , lg.ref, lg.email, lg.content, lg.formTitle, lg.firstName, lg.lastName 
+        $sql = "select transactions.* , lg.ref, lg.content, lg.formTitle, lg.firstName, lg.lastName 
             FROM $this->idpay_transactions transactions
             LEFT JOIN $this->wpefc_logs lg ON (transactions.code = lg.id) 
             WHERE transactions.status ". ($epstatus ? '=' : '!=') ." '100' 
@@ -46,12 +46,11 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
         $count = $wpdb->get_var($count);
 
         foreach ($transaction_list as $item){
-            $name = $this->string_decode($item['firstName'], 1).' '. $this->string_decode($item['lastName'], 1);
             $time = date_i18n( 'Y/n/d G:m', $item['time']);
             $amount = number_format($item['amount']);
             $content = '<tr>';
             $content .= "<td>$item[code]</td>";
-            $content .= "<td>$name</td>";
+            $content .= "<td>$item[email]</td>";
             $content .= "<td>$item[formTitle]</td>";
             $content .= "<td style=\"direction: ltr;\">$time</td>";
             $content .= "<td>$amount</td>";

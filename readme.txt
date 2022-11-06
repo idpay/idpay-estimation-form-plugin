@@ -1,8 +1,8 @@
 === IDPay for Estimation Form ===
-Contributors: meysamrazmi, vispa
+Contributors: meysamrazmi, vispa, MimDeveloper.Tv(Mohammad Malek)
 Tags: IDPay, WP Estimation Form, Estimation Form, form, payment, gateway, آیدی پی
-Stable tag: 1.0.0
-Tested up to: 5.4.2
+Stable tag: 1.1.0
+Tested up to: 6.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,5 +26,14 @@ Thank you so much for using IDPay Payment Gateway.
 
 == Changelog ==
 
-= 1.0.0, August 6, 2020 =
+== 1.1.0, June 18, 2022 ==
+* First Official Release
+* Tested Up With Wordpress 6.0 And Estimation Cost & Payment Forms Builder Plugin 10.1.44
+* Check Double Spending Correct
+* Check Does Not Xss Attack Correct
+* Fix Show Transaction ( Index - Show )
+* Fix String Decoder Errors
+* Some Improvement
+
+== 1.0.0, August 6, 2020 ==
 * First release.

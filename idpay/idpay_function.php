@@ -1,10 +1,7 @@
 <?php
 /*
  * IDPay Advanced Class
- *
- * version 	: 1.0.0
- * link 	: https://idpay.ir/plugins
- *
+ * version 	: 1.1.0
  * author 	: IDPay
  * e-mail 	: support@idpay.ir
  * website 	: https://idpay.ir

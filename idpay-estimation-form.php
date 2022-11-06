@@ -3,8 +3,8 @@
 Plugin Name: IDPay Estimation Form
 Description: IDPay payment gateway for WP Estimation Form.
 Plugin URI: https://github.com/idpay/estimation-form
-Version: 1.0.0
-Author: meysamrazmi, vispa
+Version: 1.1.0
+Author: meysamrazmi, vispa, MimDeveloper.Tv(Mohammad Malek)
 Author URI: https://idpay.ir/
 License: GPLv2 or later
 */
@@ -261,7 +261,7 @@ if (!class_exists('IDPAY_WPEFC')):
 
             $code = sanitize_text_field($_GET['code']);
             $sql_id = sanitize_text_field($_GET['sql_id']);
-            $transaction = $wpdb->get_row("select ref, email, content, formTitle, totalPrice, paid FROM " . $wpdb->prefix . "wpefc_logs WHERE id = '$code'");
+            $transaction = $wpdb->get_row("select ref, email, content, formTitle, totalPrice, paid FROM {$this->wpefc_logs} WHERE id = '$code'");
             $payment = $wpdb->get_row("select * FROM $this->idpay_transactions WHERE id = '$sql_id'");
 
             require_once(IDPAY_WPEFC_PLUGIN_PATH . 'templates/single-transaction.php');
