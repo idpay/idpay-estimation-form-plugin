@@ -3,7 +3,7 @@
 Plugin Name: IDPay Estimation Form
 Description: IDPay payment gateway for WP Estimation Form.
 Plugin URI: https://github.com/idpay/estimation-form
-Version: 1.1.0
+Version: 1.1.1
 Author: meysamrazmi, vispa, MimDeveloper.Tv(Mohammad Malek)
 Author URI: https://idpay.ir/
 License: GPLv2 or later
