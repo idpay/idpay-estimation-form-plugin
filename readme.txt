@@ -26,6 +26,9 @@ Thank you so much for using IDPay Payment Gateway.
 
 == Changelog ==
 
+== 1.1.1, Nov 13, 2022 ==
+* Tested Up With Wordpress 6.1 And Estimation Cost & Payment Forms Builder Plugin 10.1.44
+
 == 1.1.0, June 18, 2022 ==
 * First Official Release
 * Tested Up With Wordpress 6.0 And Estimation Cost & Payment Forms Builder Plugin 10.1.44
