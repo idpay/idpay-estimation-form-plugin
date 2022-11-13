@@ -1,12 +1,13 @@
-=== IDPay for Estimation Form ===
+=== Title & Descriptions ===
+
+title :IDPay for WP Estimation Form
+Tags: IDPay, WP Estimation Form, Estimation Form, form, payment, gateway, Estimation Cost, Payment Forms Builder, آیدی پی
+Stable tag: 1.1.1
+Tested up to: 6.1
 Contributors: meysamrazmi, vispa, MimDeveloper.Tv(Mohammad Malek)
-Tags: IDPay, WP Estimation Form, Estimation Form, form, payment, gateway, آیدی پی
-Stable tag: 1.1.0
-Tested up to: 6.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-IDPay for WP Estimation Form
 
 == Description ==
 
@@ -21,8 +22,6 @@ After creating a web service on https://idpay.ir and getting an API Key, follow 
 2. Click on IDPay for E&P Form gateway setting.
 3. Enter your API Key.
 4. If you need to use this plugin in Test mode, Select the "Sandbox" checkbox.
-
-Thank you so much for using IDPay Payment Gateway.
 
 == Changelog ==
 
@@ -39,4 +38,4 @@ Thank you so much for using IDPay Payment Gateway.
 * Some Improvement
 
 == 1.0.0, August 6, 2020 ==
-* First release.
+* Develope release.
