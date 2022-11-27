@@ -7,7 +7,9 @@ $idpay      = $this->get_option('idpay') ? 'checked' : '';
 $is_encript = $this->get_option('is_encript') ? 'checked' : '';
 $sandbox    = $this->get_option('sandbox') ? 'checked' : '';
 $websiteurl = get_site_url();
-
+$websiteurl = esc_url($websiteurl);
+$idpay = esc_html($idpay);
+$sandbox = esc_html($sandbox);
 ?>
 <div class="wrap">
     <h1>تنظیمات</h1>

@@ -261,10 +261,16 @@ if (!class_exists('IDPAY_WPEFC')):
 
             $code = sanitize_text_field($_GET['code']);
             $sql_id = sanitize_text_field($_GET['sql_id']);
-            $transaction = $wpdb->get_row("select ref, email, content, formTitle, totalPrice, paid FROM {$this->wpefc_logs} WHERE id = '$code'");
-            $payment = $wpdb->get_row("select * FROM $this->idpay_transactions WHERE id = '$sql_id'");
 
-            require_once(IDPAY_WPEFC_PLUGIN_PATH . 'templates/single-transaction.php');
+            $query_transaction =
+                $wpdb->prepare("select ref, email, content, formTitle, totalPrice, paid FROM {$this->wpefc_logs} WHERE id = '$code'");
+            $transaction = $wpdb->get_row($query_transaction);
+
+            $query_payment =
+                $wpdb->prepare("select * FROM $this->idpay_transactions WHERE id = '$sql_id'");
+            $payment = $wpdb->get_row($query_payment);
+
+                require_once(IDPAY_WPEFC_PLUGIN_PATH . 'templates/single-transaction.php');
         }
 
         public function idpay_transactions_setting()
