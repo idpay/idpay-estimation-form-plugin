@@ -77,6 +77,7 @@ class idpay_WPEFC_functions
 
     public function redirect($url)
     {
+        $url = esc_url($url);
         @header('Location: '. $url);
         echo "<meta http-equiv='refresh' content='0; url={$url}' />";
         echo "<script>window.location.href = '{$url}';</script>";
