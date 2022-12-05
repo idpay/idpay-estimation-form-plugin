@@ -10,7 +10,7 @@ $Description = $order['ref'];  // Required
 
 $sql = "INSERT INTO $this->idpay_transactions (`code`,`amount`,`time`,`email`,`token`,`status`,`log`) VALUES ('$order[id]','$amount','$time','$order[email]','', '0', '')";
 
-if($wpdb->query($sql) == TRUE){
+if($wpdb->query($wpdb->prepare($sql)) == TRUE){
     $dblastid = $wpdb->insert_id;
 } else {
     $this->render_msg(0, 'در ارتباط با دیتابیس خطایی رخ داده است.');
@@ -25,12 +25,12 @@ if (isset($result["Status"]) && $result["Status"] == 1) {
 
     $sql = "UPDATE $this->idpay_transactions SET token = '$result[Token]', log = 'انتقال به بانک' WHERE `id` = '$dblastid'";
 
-    if($wpdb->query($sql)){
+    if($wpdb->query($wpdb->prepare($sql))){
         $idpay->redirect($result["StartPay"]);
     }
     else{
         $sql = "UPDATE $this->idpay_transactions SET status = '200' WHERE `id` = '$dblastid'";
-        $wpdb->query($sql);
+        $wpdb->query($wpdb->prepare($sql));
         $this->render_msg(0,'در ارتباط با دیتابیس خطا رخ داده است.');
     }
 

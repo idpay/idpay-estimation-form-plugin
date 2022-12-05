@@ -44,12 +44,12 @@ $sandbox = esc_html($sandbox);
             <tr>
                 <td><label>پیام پرداخت موفق</label></td>
                 <td><textarea name="sucssesmsg" rows="4"
-                              cols="50"><?php echo $this->get_option('sucssesmsg') ?></textarea></td>
+                              cols="50"><?php echo esc_html($this->get_option('sucssesmsg')) ?></textarea></td>
             </tr>
             <tr style="height: 20px;"></tr>
             <tr>
                 <td><label>پیام پرداخت ناموفق</label></td>
-                <td><textarea name="faildmsg" rows="4" cols="50"><?php echo $this->get_option('faildmsg') ?></textarea>
+                <td><textarea name="faildmsg" rows="4" cols="50"><?php echo esc_html($this->get_option('faildmsg')) ?></textarea>
                 </td>
             </tr>
             <tr style="height: 20px;"></tr>
@@ -57,7 +57,7 @@ $sandbox = esc_html($sandbox);
                 <td style="border-bottom: 1px solid #ccc;"><b>سیستم رمزگزاری</b></td>
             <tr>
                 <td><label>فعال</label></td>
-                <td><input type="checkbox" name="is_encript" value="1" <?php echo $is_encript ?>></td>
+                <td><input type="checkbox" name="is_encript" value="1" <?php echo esc_html($is_encript) ?>></td>
             </tr>
         </table>
         <p>در صورتی که از نسخه های نال افزونه استفاده میکنید و پرداخت صورت نمیگیرد، رمزگزاری را غیرفعال کنید</p>

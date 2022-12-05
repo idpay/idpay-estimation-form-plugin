@@ -68,21 +68,21 @@ if (!class_exists('IDPAY_WPEFC')):
         {
             global $wpdb;
 
-            if ($wpdb->get_var("SHOW TABLES LIKE '$this->idpay_table_name'") != $this->idpay_table_name) {
+            if ($wpdb->get_var($wpdb->prepare("SHOW TABLES LIKE '$this->idpay_table_name'")) != $this->idpay_table_name) {
                 if (!empty($wpdb->charset))
                     $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
                 if (!empty($wpdb->collate))
                     $charset_collate .= " COLLATE $wpdb->collate";
 
-                $wpdb->query("CREATE TABLE $this->idpay_table_name (
+                $wpdb->query($wpdb->prepare("CREATE TABLE $this->idpay_table_name (
                 `id` mediumint(9) NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(120) NULL,
                 `value` VARCHAR(120) NULL,
                 UNIQUE KEY id (id)
                 ) $charset_collate;"
-                );
+                ));
 
-                $wpdb->query("INSERT INTO $this->idpay_table_name (id, title, value)
+                $wpdb->query($wpdb->prepare("INSERT INTO $this->idpay_table_name (id, title, value)
                 VALUES
                     ('', 'is_encript', 1),
                     ('', 'idpay', 1),
@@ -91,9 +91,9 @@ if (!class_exists('IDPAY_WPEFC')):
                     ('', 'api_key', ''),
                     ('', 'sucssesmsg', 'پرداخت با موفقیت صورت گرفت. به زودی با شما تماس خواهیم گرفت '),
                     ('', 'faildmsg', 'در صورت کسر مبلغ از حساب، طی نهایتا 24 ساعت به حسابتان برگشت خواهد خورد.')
-                ");
+                "));
 
-                $wpdb->query("CREATE TABLE $this->idpay_transactions (
+                $wpdb->query($wpdb->prepare("CREATE TABLE $this->idpay_transactions (
                 `id` mediumint(9) NOT NULL AUTO_INCREMENT,
                 `code` INT(11) NULL,
                 `amount` VARCHAR(120) NULL,
@@ -103,14 +103,14 @@ if (!class_exists('IDPAY_WPEFC')):
                 `status` INT(4) NULL,
                 `log` LONGTEXT CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
                 UNIQUE KEY id (id)
-            ) $charset_collate;");
+            ) $charset_collate;"));
             }
         }
 
         private function load_options()
         {
             global $wpdb;
-            $result = $wpdb->get_results("SELECT `title`,`value` FROM $this->idpay_table_name", ARRAY_A);
+            $result = $wpdb->get_results($wpdb->prepare("SELECT `title`,`value` FROM $this->idpay_table_name", ARRAY_A));
             foreach ($result as $val) {
                 $this->set_option($val['title'], $val['value']);
             }
@@ -169,7 +169,7 @@ if (!class_exists('IDPAY_WPEFC')):
             global $wpdb;
 
             $order = [];
-            $recentLogs = $wpdb->get_results("SELECT `id`,`ref`,`email`,`phone`,`firstName`,`lastName`,`totalPrice` FROM `" . $this->wpefc_logs . "` ORDER by `id` DESC LIMIT $limit");
+            $recentLogs = $wpdb->get_results($wpdb->prepare("SELECT `id`,`ref`,`email`,`phone`,`firstName`,`lastName`,`totalPrice` FROM `" . $this->wpefc_logs . "` ORDER by `id` DESC LIMIT $limit"));
             foreach ($recentLogs as $log) {
                 if ($this->getEmailFromDecoder($log->email) == sanitize_text_field($_GET['email'])) {
                     $order['amount'] = $log->totalPrice;
@@ -225,7 +225,7 @@ if (!class_exists('IDPAY_WPEFC')):
 
         private function get_option($option)
         {
-            return isset($this->options[$option]) ? $this->options[$option] : false;
+            return esc_html($this->options[$option]) !== null ? esc_html($this->options[$option]) : false;
         }
 
         private function set_option($option, $val = '')
@@ -279,26 +279,26 @@ if (!class_exists('IDPAY_WPEFC')):
 
             if (isset($_POST['faildmsg']) && isset($_POST['sucssesmsg']) && isset($_POST['api_key'])) {
                 foreach ($_POST as $key => $value) {
-                    $wpdb->query("UPDATE $this->idpay_table_name SET `value` = '" . sanitize_text_field($value) . "' WHERE title = '$key'");
+                    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_table_name SET `value` = '" . sanitize_text_field($value) . "' WHERE title = '$key'"));
                 }
 
                 if (isset($_POST['idpay'])) {
-                    $wpdb->query("UPDATE $this->idpay_table_name SET `value` = '1' WHERE title = 'idpay'");
+                    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_table_name SET `value` = '1' WHERE title = 'idpay'"));
                 } else {
-                    $wpdb->query("UPDATE $this->idpay_table_name SET `value` = '0' WHERE title = 'idpay'");
+                    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_table_name SET `value` = '0' WHERE title = 'idpay'"));
                 }
                 if (isset($_POST['is_encript'])) {
-                    $wpdb->query("UPDATE $this->idpay_table_name SET `value` = '1' WHERE title = 'is_encript'");
+                    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_table_name SET `value` = '1' WHERE title = 'is_encript'"));
                 } else {
-                    $wpdb->query("UPDATE $this->idpay_table_name SET `value` = '0' WHERE title = 'is_encript'");
+                    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_table_name SET `value` = '0' WHERE title = 'is_encript'"));
                 }
                 if (isset($_POST['sandbox'])) {
-                    $wpdb->query("UPDATE $this->idpay_table_name SET `value` = '1' WHERE title = 'sandbox'");
+                    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_table_name SET `value` = '1' WHERE title = 'sandbox'"));
                 } else {
-                    $wpdb->query("UPDATE $this->idpay_table_name SET `value` = '0' WHERE title = 'sandbox'");
+                    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_table_name SET `value` = '0' WHERE title = 'sandbox'"));
                 }
 
-                $dbsetting = $wpdb->get_results("SELECT `title`,`value` FROM $this->idpay_table_name", ARRAY_A);
+                $dbsetting = $wpdb->get_results($wpdb->prepare("SELECT `title`,`value` FROM $this->idpay_table_name", ARRAY_A));
                 foreach ($dbsetting as $val) {
                     $this->set_option($val['title'], $val['value']);
                 }

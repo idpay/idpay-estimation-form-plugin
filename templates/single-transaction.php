@@ -27,7 +27,7 @@ if (strpos($transaction->content, '<form ') || strpos($transaction->content, '<s
     foreach ($toReplaceBy as $key => $value) {
         $persianversion = str_replace($toReplaceDefault[$key], $toReplaceBy[$key], $persianversion);
     }
-    echo '<div class="lfb_logContainer">'. $persianversion .'</div>';
+    echo '<div class="lfb_logContainer">'. esc_html($persianversion) .'</div>';
 
 } else {
     echo '<div class="lfb_logContainer">'.
@@ -49,17 +49,17 @@ if (strpos($transaction->content, '<form ') || strpos($transaction->content, '<s
         </thead>
         <tbody>
         <tr>
-            <td><?php echo $amount; ?></td>
-            <td><?php echo $payment->token; ?></td>
-            <td><?php echo $time; ?></td>
-            <td><?php echo $transaction->formTitle; ?></td>
+            <td><?php echo esc_html($amount); ?></td>
+            <td><?php echo esc_html($payment->token); ?></td>
+            <td><?php echo esc_html($time); ?></td>
+            <td><?php echo esc_html($transaction->formTitle); ?></td>
             <td>
-                <pre style="text-align: left;direction: ltr;"><?php echo $payment->log; ?></pre>
+                <pre style="text-align: left;direction: ltr;"><?php echo esc_html($payment->log); ?></pre>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
 <a class="button-primary back-button"
-   href='<?php echo $websiteurl; ?>/wp-admin/admin.php?page=idpay_wpefc_transactions<?php echo $transaction->paid? '': '&unsuccess';?>'>بازگشت</a>
+   href='<?php echo esc_html($websiteurl); ?>/wp-admin/admin.php?page=idpay_wpefc_transactions<?php echo $transaction->paid? '': '&unsuccess';?>'>بازگشت</a>
 <?php echo file_get_contents(IDPAY_WPEFC_PLUGIN_PATH . 'templates/transactions_style.html'); ?>

@@ -56,7 +56,7 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
             $content .= "<td>$amount</td>";
             $content .= "<td><a class='button' href='". $url ."_single&code=$item[code]&sql_id=$item[id]'>نمایش جزئیات</a></td>";
             $content .= '</tr>';
-            echo $content;
+            echo esc_html($content);
         }
         $paginationbtn = "<ul style='display: flex;justify-content: center'>";
         $feppaged = $paged + 1;

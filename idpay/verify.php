@@ -26,24 +26,24 @@ if ($status == 10) {
 
 //Check Status Verify
     if (isset($result["Status"]) && $result["Status"] == 1) {
-        $wpdb->query("UPDATE $this->idpay_transactions SET status = '100',token = '$result[Track_id]',log = '$result[log]' 
-                            WHERE token = '$transId' AND code = '$order_id'");
+        $wpdb->query($wpdb->prepare("UPDATE $this->idpay_transactions SET status = '100',token = '$result[Track_id]',log = '$result[log]' 
+                            WHERE token = '$transId' AND code = '$order_id'"));
 
-        $wpdb->query("UPDATE " . $this->wpefc_logs . " SET paid = '1' WHERE id = '$order_id'");
+        $wpdb->query($wpdb->prepare("UPDATE " . $this->wpefc_logs . " SET paid = '1' WHERE id = '$order_id'"));
         $this->render_msg(1, $result["Message"]);
 
     } else {
         $json = json_encode($params);
-        $wpdb->query("UPDATE $this->idpay_transactions SET log = '$json' WHERE token = '$transId' AND code = '$order_id'");
+        $wpdb->query($wpdb->prepare("UPDATE $this->idpay_transactions SET log = '$json' WHERE token = '$transId' AND code = '$order_id'"));
         $this->render_msg(0, $result["Message"]);
     }
 
 } else {
     $json = json_encode($params);
     //Update Payment Status
-    $wpdb->query("UPDATE $this->idpay_transactions SET log = '$json'  WHERE token = '$transId' AND code = '$order_id'");
+    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_transactions SET log = '$json'  WHERE token = '$transId' AND code = '$order_id'"));
     //Update Order State
-    $wpdb->query("UPDATE $this->idpay_transactions SET `status` = '$status'  WHERE `token` = '$transId'");
+    $wpdb->query($wpdb->prepare("UPDATE $this->idpay_transactions SET `status` = '$status'  WHERE `token` = '$transId'"));
     //Redirect
     $this->render_msg(0, sprintf('%s (کد: %s). کد رهگیری: %s', $idpay->getStatus($status), $status, $track_id));
 }
