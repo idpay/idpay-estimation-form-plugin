@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$websiteurl = get_site_url();
+$websiteurl = esc_url(get_site_url()) ;
 $time = date_i18n('Y/n/d G:m', $payment->time);
 $amount = number_format($payment->amount);
 
@@ -37,10 +37,10 @@ if (strpos($transaction->content, '<form ') || strpos($transaction->content, '<s
 ?>
 <div>
     <h2 style="margin: 20px 0 40px;">گزارش درگاه آیدی پی</h2>
-    <table class="idpay-log <?php echo $transaction->paid? 'success-log': 'failed-log';?>">
+    <table class="idpay-log <?php echo esc_html($transaction->paid) ? 'success-log': 'failed-log';?>">
         <thead>
         <tr>
-            <th>مبلغ <?php echo $transaction->paid? 'پرداختی': '(پرداخت نشده)';?></th>
+            <th>مبلغ <?php echo esc_html($transaction->paid) ? 'پرداختی': '(پرداخت نشده)';?></th>
             <th>کدتراکنش</th>
             <th>زمان</th>
             <th>نام فرم</th>
@@ -61,5 +61,5 @@ if (strpos($transaction->content, '<form ') || strpos($transaction->content, '<s
     </table>
 </div>
 <a class="button-primary back-button"
-   href='<?php echo esc_html($websiteurl); ?>/wp-admin/admin.php?page=idpay_wpefc_transactions<?php echo $transaction->paid? '': '&unsuccess';?>'>بازگشت</a>
+   href='<?php echo esc_html($websiteurl); ?>/wp-admin/admin.php?page=idpay_wpefc_transactions<?php echo esc_html($transaction->paid) ? '': '&unsuccess';?>'>بازگشت</a>
 <?php echo file_get_contents(IDPAY_WPEFC_PLUGIN_PATH . 'templates/transactions_style.html'); ?>

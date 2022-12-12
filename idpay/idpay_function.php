@@ -7,6 +7,8 @@
  * website 	: https://idpay.ir
 */
 
+
+
 class idpay_WPEFC_functions
 {
     public function getStatus($status_code)
@@ -79,8 +81,8 @@ class idpay_WPEFC_functions
     {
         $url = esc_url($url);
         @header('Location: '. $url);
-        echo "<meta http-equiv='refresh' content='0; url={$url}' />";
-        echo "<script>window.location.href = '{$url}';</script>";
+        echo esc_html("<meta http-equiv='refresh' content='0; url={$url}' />");
+        echo esc_html("<script>window.location.href = '{$url}';</script>");
         exit;
     }
 
@@ -199,8 +201,9 @@ class idpay_WPEFC_functions
 
     public function isNotDoubleSpending($database,$reference, $order_id, $transaction_id)
     {
+        global $wpdb;
         $sql = sprintf("SELECT * FROM %s WHERE `code` = %s", $reference, $order_id);
-        $transaction = $database->get_row($sql);
+        $transaction = $database->get_row($wpdb->prepare($sql));
         if (!empty($transaction->token)) {
             return $transaction->token == $transaction_id;
         }

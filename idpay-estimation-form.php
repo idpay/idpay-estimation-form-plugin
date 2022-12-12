@@ -142,7 +142,7 @@ if (!class_exists('IDPAY_WPEFC')):
 
             $script = $type ? $success_msg : $fail_msg;
             add_action('wp_footer', function () use ($script) {
-                echo $script;
+                echo esc_html($script);
             });
         }
 

@@ -10,7 +10,7 @@ $style = file_get_contents( IDPAY_WPEFC_PLUGIN_PATH . 'templates/result_style.ht
 
 <script>
     jQuery(document).ready(function ($) {
-        let baseUrl = '<?php echo $site_url ?>';
+        let baseUrl = '<?php echo esc_url($site_url); ?>';
         let paymentRedirect;
         let paymentLoader = function() {
             if($('#lfb_bootstraped').length){
@@ -31,7 +31,7 @@ $style = file_get_contents( IDPAY_WPEFC_PLUGIN_PATH . 'templates/result_style.ht
 
         function doPayment() {
             let email = $('#lfb_bootstraped input[name=email]').val();
-            $('body').prepend('<?php echo $style?><div id=\"wpefgmsg\"><div> <div class=\"wpefgmsgclose\" onClick=\"wpefgmsgclose();\">X</div> <h1 style=\"margin: -20px 0 0 0;\"> پرداخت امن با آیدی پی</h1><p style=\"color: #777; margin-bottom: 10px;\">درگاه پرداخت کلیه کارت های عضو شبکه شتاب</p> <?php echo $idpay_payment ?> <a style=\"background: #03A9F4; color: #fff; border-radius: 5px; width: 80%; display: block; margin: 0 auto; margin-top: 21px; line-height: 35px; margin-bottom: -10px; font-size: 14px;\" href=\"'+baseUrl+'/?wpef_idpay=pay&email='+email+'\">پرداخت</a></div></div>');
+            $('body').prepend('<?php echo esc_html($style)?><div id=\"wpefgmsg\"><div> <div class=\"wpefgmsgclose\" onClick=\"wpefgmsgclose();\">X</div> <h1 style=\"margin: -20px 0 0 0;\"> پرداخت امن با آیدی پی</h1><p style=\"color: #777; margin-bottom: 10px;\">درگاه پرداخت کلیه کارت های عضو شبکه شتاب</p> <?php echo esc_html($idpay_payment) ?> <a style=\"background: #03A9F4; color: #fff; border-radius: 5px; width: 80%; display: block; margin: 0 auto; margin-top: 21px; line-height: 35px; margin-bottom: -10px; font-size: 14px;\" href=\"'+baseUrl+'/?wpef_idpay=pay&email='+email+'\">پرداخت</a></div></div>');
             setTimeout(function() {
                 $('.bank_paymnt').click(function() {
                     $('.bank_paymnt').css({'border': '4px solid #ccc'});
@@ -45,4 +45,4 @@ $style = file_get_contents( IDPAY_WPEFC_PLUGIN_PATH . 'templates/result_style.ht
             },50)
         }
     })
-</script>";
+</script>

@@ -6,36 +6,31 @@ GLOBAL $wpdb;
 $idpay 	     = new idpay_WPEFC_functions();
 $amount      = str_replace(',', '', $order['amount']);
 $time        = time();
-$Description = $order['ref'];  // Required
+$Description = $order['ref'];
+$sql = "INSERT INTO {$this->idpay_transactions} (code,amount,time,email,token,status,log) VALUES ('{$order['id']}','$amount','$time','{$order['email']}','', '0', '')";
 
-$sql = "INSERT INTO $this->idpay_transactions (`code`,`amount`,`time`,`email`,`token`,`status`,`log`) VALUES ('$order[id]','$amount','$time','$order[email]','', '0', '')";
-
-if($wpdb->query($wpdb->prepare($sql)) == TRUE){
-    $dblastid = $wpdb->insert_id;
-} else {
-    $this->render_msg(0, 'در ارتباط با دیتابیس خطایی رخ داده است.');
-}
-
-$CallbackURL = get_home_url()."?wpef_idpay=verify&payment=idpay&sub_id=$dblastid&order_id=$order[id]";
+if($wpdb->query($wpdb->prepare($sql)) == TRUE) {  $lastId = $wpdb->insert_id; }
+else {   $this->render_msg(0, 'در ارتباط با دیتابیس خطایی رخ داده است.'); }
+$CallbackURL = get_home_url()."?wpef_idpay=verify&payment=idpay&sub_id={$lastId}&order_id={$order['id']}";
 $amount      = $amount * ( ($this->get_option('currency') == 'toman') ? 10 : 1 );
-
 $result = $idpay->request($this->get_option('api_key'), $order['id'], $amount, $Description, $order['email'], $order['phone'], $order['name'], $CallbackURL, $this->get_option('sandbox'));
 
 if (isset($result["Status"]) && $result["Status"] == 1) {
 
-    $sql = "UPDATE $this->idpay_transactions SET token = '$result[Token]', log = 'انتقال به بانک' WHERE `id` = '$dblastid'";
+    $sql = "UPDATE {$this->idpay_transactions} SET token ='{$result['Token']}', log ='انتقال به بانک' WHERE id ='{$lastId}'";
 
     if($wpdb->query($wpdb->prepare($sql))){
         $idpay->redirect($result["StartPay"]);
     }
     else{
-        $sql = "UPDATE $this->idpay_transactions SET status = '200' WHERE `id` = '$dblastid'";
+        $sql = "UPDATE {$this->idpay_transactions} SET status ='200' WHERE id ='{$lastId}'";
         $wpdb->query($wpdb->prepare($sql));
         $this->render_msg(0,'در ارتباط با دیتابیس خطا رخ داده است.');
     }
 
 } else {
-    $sql = "UPDATE $this->idpay_transactions SET status = '201', log = '$result[Message]' WHERE `id` = '$dblastid'";
+    $sql = "UPDATE {$this->idpay_transactions} SET status ='201', log ='{$result['Message']}' WHERE id = '{$lastId}'";
+    $wpdb->query($wpdb->prepare($sql));
     $this->render_msg(0, $result['Message']);
 }
 

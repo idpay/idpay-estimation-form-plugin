@@ -29,7 +29,7 @@ $sandbox = esc_html($sandbox);
             </tr>
             <tr>
                 <td><label>کد درگاه آیدی پی</label></td>
-                <td><input type="text" name="api_key" size="36" value="<?php echo $this->get_option('api_key') ?>"></td>
+                <td><input type="text" name="api_key" size="36" value="<?php echo esc_html($this->get_option('api_key')) ?>"></td>
             </tr>
             <tr>
                 <td><label>واحد پول</label></td>
@@ -57,7 +57,7 @@ $sandbox = esc_html($sandbox);
                 <td style="border-bottom: 1px solid #ccc;"><b>سیستم رمزگزاری</b></td>
             <tr>
                 <td><label>فعال</label></td>
-                <td><input type="checkbox" name="is_encript" value="1" <?php echo esc_html($is_encript) ?>></td>
+                <td><input type="checkbox" name="is_encript" <?php echo esc_html($is_encript) ?> value="1"></td>
             </tr>
         </table>
         <p>در صورتی که از نسخه های نال افزونه استفاده میکنید و پرداخت صورت نمیگیرد، رمزگزاری را غیرفعال کنید</p>

@@ -4,17 +4,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 GLOBAL $wpdb;
-$websiteurl      = get_site_url();
-$url             = $websiteurl. '/wp-admin/admin.php?page=idpay_wpefc_transactions';
-$epstatus        = isset($_GET['unsuccess'])? false : true;
+$websiteurl = esc_url(get_site_url());
+$url = $websiteurl. '/wp-admin/admin.php?page=idpay_wpefc_transactions';
+$epstatus = isset($_GET['unsuccess'])? false : true;
 
 ?>
-<div class="wrap <?php echo $epstatus? 'success-transactions': 'failed-transactions';?>">
+<div class="wrap <?php echo esc_html($epstatus) ? 'success-transactions': 'failed-transactions';?>">
     <h1>Transactions</h1>
-    <p style="margin-bottom: 50px; margin-top: 0px; font-size: 14px; letter-spacing: 1px;"><?php echo $epstatus? 'تراکنش های موفق': 'تراکنش های ناموفق'; ?></p>
+    <p style="margin-bottom: 50px; margin-top: 0px; font-size: 14px; letter-spacing: 1px;"><?php echo esc_html($epstatus) ? 'تراکنش های موفق': 'تراکنش های ناموفق'; ?></p>
     <ul style="display: flex">
-        <li><a class="wpefc_transaction_btn" href="<?php echo $url;?>">تراکنش های موفق</a></li>
-        <li><a class="wpefc_transaction_btn" href="<?php echo $url ."&unsuccess";?>">تراکنش های ناموفق</a></li>
+        <li><a class="wpefc_transaction_btn" href="<?php echo esc_url($url) ;?>">تراکنش های موفق</a></li>
+        <li><a class="wpefc_transaction_btn" href="<?php echo esc_url($url ."&unsuccess") ;?>">تراکنش های ناموفق</a></li>
     </ul>
     <table id="wpefc_transaction">
         <thead>
@@ -43,6 +43,7 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
         $transaction_list = $wpdb->get_results($sql,ARRAY_A);
 
         $count = "select count(*) FROM $this->idpay_transactions WHERE status ". ($epstatus ? '=' : '!=') ." '100'";
+
         $count = $wpdb->get_var($count);
 
         foreach ($transaction_list as $item){
@@ -70,8 +71,8 @@ $epstatus        = isset($_GET['unsuccess'])? false : true;
         }
 
         $paginationbtn .= '</ul>';
-        echo '</table>'. $paginationbtn;
-        echo file_get_contents( IDPAY_WPEFC_PLUGIN_PATH . 'templates/transactions_style.html');
+        echo '</table>'. esc_html($paginationbtn);
+        echo esc_html(file_get_contents( IDPAY_WPEFC_PLUGIN_PATH . 'templates/transactions_style.html'));
         ?>
     </table>
 </div>
